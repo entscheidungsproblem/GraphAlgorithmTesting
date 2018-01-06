@@ -1,0 +1,6 @@
+#!/bin/bash
+
+dot -Tps SPFA.dot -o SPFA.ps
+dot -Tps Pape.dot -o Pape.ps
+dot -Tps BellmanFord.dot -o BellmanFord.ps
+dot -Tps Dijkstra.dot -o Dijkstra.ps
