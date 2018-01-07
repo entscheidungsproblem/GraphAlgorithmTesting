@@ -2,17 +2,16 @@
 #include <limits>
 #include <deque>
 #include <set>
-#include <boost/assert.hpp>
 
-boost::container::vector<std::pair<float, boost::optional<unsigned long>>> SPFA::shortest_path(GraphADT* G, unsigned long start){
+vector<std::pair<float, optional<unsigned long>>> SPFA::shortest_path(GraphADT* G, unsigned long start){
 	// Initialize starting setup. Cost from source is infinity for all but the source. No parents are found to start.
 	float infin = std::numeric_limits<float>::infinity();
 	unsigned long size = G->get_vertex_size();
-	boost::container::vector<std::pair<float, boost::optional<unsigned long>>> vertices;
-	std::pair<float,boost::optional<unsigned long>> s (0,boost::optional<unsigned long>{});
+	vector<std::pair<float, optional<unsigned long>>> vertices;
+	std::pair<float,optional<unsigned long>> s (0,optional<unsigned long>{});
 	vertices.push_back(s);
 	for (unsigned long i = 1ul; i != size; i++){
-		std::pair<float,boost::optional<unsigned long>> p (infin,boost::optional<unsigned long>{});
+		std::pair<float,optional<unsigned long>> p (infin,optional<unsigned long>{});
 		vertices.push_back(p);
 	}
 
@@ -28,7 +27,7 @@ boost::container::vector<std::pair<float, boost::optional<unsigned long>>> SPFA:
 		unsigned long current = Q.front();
 		Q.pop_front();
 		uniqueQ.erase(current);
-		BOOST_ASSERT(size == vertices.size());
+		// BOOST_ASSERT(size == vertices.size());
 
 		// For each neighbour, next, check if its cost can be reduced by setting current as the parent
 		for (unsigned long next = 0ul; next != size; next++){		

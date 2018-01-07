@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Graph dot and ps
+*.ps
+*.dot

@@ -1,14 +1,12 @@
-
-#include <iostream>
-#include <utility>										// For make_pair
-#include <stdexcept>									// For throw std::invalid_argument
-
-#include <boost/random/uniform_int_distribution.hpp>
-#include <boost/random/uniform_real_distribution.hpp>
-#include <boost/random/normal_distribution.hpp>
-
 #include "random_graph_generator.hpp"
 
+#include <iostream>
+#include <utility>	// For make_pair
+#include <stdexcept>	// For throw std::invalid_argument
+#include <random>
+
+using std::uniform_int_distribution;
+using std::uniform_real_distribution;
 
 Generator::Generator(){
 	AdjacencyMatrix _G;
@@ -28,7 +26,7 @@ void Generator::generate_vertices(const unsigned long _number_of_nodes){
 	}
 }
 
-boost::container::vector<unsigned long> Generator::reservoir_sampling(const unsigned long size_subset, const boost::unordered_set<unsigned long> potential_edges){
+vector<unsigned long> Generator::reservoir_sampling(const unsigned long size_subset, const unordered_set<unsigned long> potential_edges){
 	Random<unsigned long> r;
 	unsigned long size_set = potential_edges.size();
 	if (size_subset > size_set){
@@ -36,18 +34,18 @@ boost::container::vector<unsigned long> Generator::reservoir_sampling(const unsi
 	}
 	// First, create a vector of the first size_subset elements
 	// This is our base case
-	boost::container::vector<unsigned long> output(size_subset);
+	vector<unsigned long> output(size_subset);
 	unsigned long i = 0;
-	for (boost::unordered_set<unsigned long>::iterator it = potential_edges.begin(); it != potential_edges.end(); it++){
+	for (unordered_set<unsigned long>::const_iterator it = potential_edges.cbegin(); it != potential_edges.cend(); it++){
 		if (i < size_subset){
 			output[i] = *it;
 			i++;	
 		}
 		else if (i < size_set){
-			unsigned long p = r.random_num<boost::random::uniform_int_distribution<unsigned long>>(0, i); // i-1 maybe?
+			unsigned long p = r.random_num<uniform_int_distribution<unsigned long>>(0, i); // i-1 maybe?
 			if (p < size_subset){
 				// Then randomly select the element in output to replace
-				unsigned long random_index = r.random_num<boost::random::uniform_int_distribution<unsigned long>>(0, size_subset-1);
+				unsigned long random_index = r.random_num<uniform_int_distribution<unsigned long>>(0, size_subset-1);
 				output[random_index] = *it;
 			}
 			i++;
@@ -69,7 +67,7 @@ void Generator::generate_set_edges(const unsigned long _number_of_nodes, const u
 	unsigned long size = _number_of_nodes*_number_of_nodes;
 	
 	// Create a set of potential edges
-	boost::unordered_set<unsigned long> potential_edges;
+	unordered_set<unsigned long> potential_edges;
 	unsigned long x;
 	unsigned long y;
 	for (unsigned long i = 0; i < size; i++){
@@ -90,8 +88,8 @@ void Generator::generate_set_edges(const unsigned long _number_of_nodes, const u
 	}
 
 	// Use reservior sampling to generate _number_of_edges unique numbers between 0 and size
-	boost::container::vector<unsigned long> output = reservoir_sampling(_number_of_edges, potential_edges);
-	for (boost::container::vector<unsigned long>::iterator i = output.begin(); i != output.end(); i++){
+	vector<unsigned long> output = reservoir_sampling(_number_of_edges, potential_edges);
+	for (vector<unsigned long>::iterator i = output.begin(); i != output.end(); i++){
 		G.set_edge(*i);
 	}
 	if (_directed) {G.set_directed(true);}
@@ -116,7 +114,7 @@ void Generator::generate_p_edges(const unsigned long _number_of_nodes, const flo
 		}
 		for (unsigned long x = diagonal; x < _number_of_nodes; x++){
 			// If the generated probability is less than the thresold, add an edge
-			float probability = r.random_num<boost::random::uniform_real_distribution<float>>(0, 1);
+			float probability = r.random_num<uniform_real_distribution<float>>(0, 1);
 			if ((_self_loops || x!=y)&&(probability < p)){
 				G.set_edge(y*_number_of_nodes + x);
 			}
@@ -143,7 +141,7 @@ void Generator::generate_edge_weight(const float _min, const float _max){
 	// Assign a random weight to each edge
 	for (unsigned long i = 0; i < size; i++){
 		if (G.check_edge(i)){
-			float weight = r.random_num<boost::random::uniform_real_distribution<float>>(_min, _max);
+			float weight = r.random_num<uniform_real_distribution<float>>(_min, _max);
 			G.set_edge(i, weight);
 		}
 	}

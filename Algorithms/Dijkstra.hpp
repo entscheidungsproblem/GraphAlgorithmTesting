@@ -3,14 +3,18 @@
 
 #include "../DataStructures/graphADT.hpp"
 
-#include <boost/optional.hpp>
-#include <boost/container/vector.hpp>
-#include <boost/container/set.hpp>
+#include <optional>
+#include <vector>
+#include <set>
 #include <utility>      // std::pair, std::get
+
+using std::optional;
+using std::vector;
+using std::set;
 
 class Dijkstra{
 public:
-	boost::container::vector<std::pair<float, boost::optional<unsigned long>>> shortest_path(GraphADT* G, unsigned long start);
+	vector<std::pair<float, optional<unsigned long>>> shortest_path(GraphADT* G, unsigned long start);
 };
 
 #endif

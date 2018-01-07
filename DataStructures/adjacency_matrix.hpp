@@ -2,17 +2,23 @@
 #define ADJ_MATRIX_HPP
 
 #include "graphADT.hpp"
-#include <boost/container/vector.hpp>
-#include <boost/container/set.hpp>
-#include <boost/optional.hpp>
+#include <vector>
+#include <set>
+#include <optional>
 #include <limits>
+
+using std::set;
+using std::vector;
+using std::optional;
+using std::string;
+
 
 
 class AdjacencyMatrix : public GraphADT{
 protected:
 	//unsigned long number_of_vertices;
 	//unsigned long number_of_edges;
-	boost::container::vector<boost::optional<float>> edges;
+	vector<optional<float>> edges;
 	bool directed;
 public:
 	AdjacencyMatrix();
@@ -21,7 +27,7 @@ public:
 	bool check_edge(unsigned long position) override;
 	float get_edge(unsigned long position) override;
 	void print_graph() override;
-	void export_dot(std::string filename, boost::container::set<unsigned long> shortest_path_tree= {}) override;
+	void export_dot(string filename, set<unsigned long> shortest_path_tree= {}) override;
 	unsigned long get_edge_size() override;
 	unsigned long get_vertex_size() override;
 	void set_directed(bool _directed) override;

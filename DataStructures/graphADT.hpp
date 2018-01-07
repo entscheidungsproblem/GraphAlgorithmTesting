@@ -3,7 +3,10 @@
 
 #include <cstdint>
 #include <string>
-#include <boost/container/set.hpp>
+#include <set>
+
+using std::set;
+using std::string;
 
 class GraphADT{
 protected:
@@ -19,7 +22,7 @@ public:
 	virtual bool check_edge(unsigned long position) = 0;
 	virtual float get_edge(unsigned long position) = 0;
 	virtual void print_graph() = 0;
-	virtual void export_dot(std::string filename, boost::container::set<unsigned long> shortest_path_tree) = 0;
+	virtual void export_dot(string filename, set<unsigned long> shortest_path_tree) = 0;
 	virtual unsigned long get_edge_size() = 0;
 	virtual unsigned long get_vertex_size() = 0;
 	virtual void set_directed(bool _directed) = 0;

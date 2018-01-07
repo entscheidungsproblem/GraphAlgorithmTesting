@@ -3,13 +3,16 @@
 
 #include "../DataStructures/graphADT.hpp"
 
-#include <boost/optional.hpp>
-#include <boost/container/vector.hpp>
+#include <optional>
+#include <vector>
 #include <utility>      // std::pair, std::get
+
+using std::vector;
+using std::optional;
 
 class BellmanFord{
 public:
-	boost::container::vector<std::pair<float, boost::optional<unsigned long>>> shortest_path(GraphADT* G, unsigned long start);
+	vector<std::pair<float, optional<unsigned long>>> shortest_path(GraphADT* G, unsigned long start);
 };
 
 #endif

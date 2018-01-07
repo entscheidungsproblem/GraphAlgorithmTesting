@@ -1,6 +1,5 @@
 #include "DataStructures/graphADT.hpp"
 #include "DataStructures/adjacency_matrix.hpp"
-#include "DataStructures/adjacency_list.hpp"
 #include "DataStructures/graph_converter.hpp"
 #include "RandomGraph/random_graph_generator.hpp"
 #include "RandomGraph/graphBuilder.hpp"
@@ -13,8 +12,12 @@
 
 #include <utility>      // std::pair, std::get
 #include <string>
-#include <boost/container/vector.hpp>
-#include <boost/container/set.hpp>
+#include <set>
+#include <vector>
+
+using std::vector;
+using std::set;
+using std::string;
 
 int main() { 
 
@@ -39,9 +42,9 @@ int main() {
 	GraphADT* G = b.build();
 	SSSP alg;
 	alg.setup(G, 0ul);
-	boost::container::vector<boost::container::set<unsigned long>> results = alg.run<BellmanFord, SPFA, Pape>(true);
+	vector<set<unsigned long>> results = alg.run<BellmanFord, SPFA, Pape>(true);
 	// And print the results
-	boost::container::vector<std::string> filenames = {"BellmanFord", "SPFA", "Pape"};
+	vector<string> filenames = {"BellmanFord", "SPFA", "Pape"};
 	for (uint i = 0; i != filenames.size(); i++){
 		G->export_dot(filenames[i],results[i]);
 	}

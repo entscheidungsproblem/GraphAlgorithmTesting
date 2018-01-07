@@ -1,13 +1,13 @@
 #include "bellman_ford.hpp"
 #include <limits>
 
-boost::container::vector<std::pair<float, boost::optional<unsigned long>>> BellmanFord::shortest_path(GraphADT* G, unsigned long start){
+vector<std::pair<float, optional<unsigned long>>> BellmanFord::shortest_path(GraphADT* G, unsigned long start){
 	// Initialize starting setup. Cost from source is infinity for all but the source. No parents are found to start.
 	float infin = std::numeric_limits<float>::infinity();
 	unsigned long size = G->get_vertex_size();
-	boost::container::vector<std::pair<float, boost::optional<unsigned long>>> vertices;
+	vector<std::pair<float, optional<unsigned long>>> vertices;
 	for (unsigned long i = 0ul; i != size; i++){
-		std::pair<float,boost::optional<unsigned long>> p (infin,boost::optional<unsigned long>{});
+		std::pair<float,optional<unsigned long>> p (infin,optional<unsigned long>{});
 		vertices.push_back(p);
 	}
 	std::get<0>(vertices[start]) = 0;

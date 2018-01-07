@@ -2,16 +2,16 @@
 #include <deque>
 #include <set>
 
-boost::container::vector<std::pair<float, boost::optional<unsigned long>>> Pape::shortest_path(GraphADT* G, unsigned long start){
+vector<std::pair<float, optional<unsigned long>>> Pape::shortest_path(GraphADT* G, unsigned long start){
 	float infin = std::numeric_limits<float>::infinity();
 	unsigned long size = G->get_vertex_size();
-	boost::container::vector<std::pair<float, boost::optional<unsigned long>>> vertices;
+	vector<std::pair<float, optional<unsigned long>>> vertices;
 	
-	std::pair<float,boost::optional<unsigned long>> s (0,boost::optional<unsigned long>{});
+	std::pair<float,optional<unsigned long>> s (0,optional<unsigned long>{});
 	vertices.push_back(s);
 	
 	for (unsigned long i = 1ul; i != size; i++){
-		std::pair<float,boost::optional<unsigned long>> p (infin,boost::optional<unsigned long>{});
+		std::pair<float,optional<unsigned long>> p (infin,optional<unsigned long>{});
 		vertices.push_back(p);
 	}
 
@@ -26,7 +26,7 @@ boost::container::vector<std::pair<float, boost::optional<unsigned long>>> Pape:
 		unsigned long current = Q.front();
 		Q.pop_front();
 		uniqueQ.erase(current);
-		BOOST_ASSERT(size == vertices.size());
+		// BOOST_ASSERT(size == vertices.size());
 		for (unsigned long next = 0ul; next != size; next++){		
 			if (G->check_edge(current*size + next) && G->get_edge(current*size + next) + std::get<0>(vertices[current]) < std::get<0>(vertices[next])){
 				std::get<0>(vertices[next]) = G->get_edge(current*size + next) + std::get<0>(vertices[current]);

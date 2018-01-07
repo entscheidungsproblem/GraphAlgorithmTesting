@@ -5,15 +5,18 @@
 #include "../DataStructures/adjacency_matrix.hpp"
 #include "random.hpp"
 
-#include <boost/container/vector.hpp>
-#include <boost/unordered_set.hpp>
+#include <vector>
+#include <unordered_set>
+
+using std::vector;
+using std::unordered_set;
 
 class Generator{
 private:
 	AdjacencyMatrix G;
 	void generate_vertices(const unsigned long _number_of_nodes);
 	bool valid_input(const unsigned long _number_of_nodes, const unsigned long _number_of_edges);
-	boost::container::vector<unsigned long> reservoir_sampling(const unsigned long size_subset, const boost::unordered_set<unsigned long> potential_edges);
+	vector<unsigned long> reservoir_sampling(const unsigned long size_subset, const unordered_set<unsigned long> potential_edges);
 public:
 	Generator();
 	void generate_set_edges(const unsigned long _number_of_nodes, const unsigned long _number_of_edges, bool _acyclic, bool _directed, bool _self_loops);

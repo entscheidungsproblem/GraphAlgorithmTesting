@@ -1,8 +1,10 @@
 #ifndef RAND_HPP
 #define RAND_HPP
 
-#include <boost/random/mersenne_twister.hpp>
 #include <chrono>
+#include <random>
+
+using std::mt19937;
 
 template <class NumType>
 class Random{
@@ -24,7 +26,7 @@ template <class Distribution>
 NumType Random<NumType>::random_num(NumType _min, NumType _max){
 	// Use the given distribution to generate a random NumType
 	Distribution distribution(_min, _max);
-	boost::random::mt19937 generator (create_seed());
+	mt19937 generator (create_seed());
 	return distribution(generator);
 }
 

@@ -11,11 +11,14 @@
 #include "Algorithms/SSSP.hpp"
 #include <iostream>
 
+using std::vector;
+
+
 class TimeSSSP{
 private:
 	Builder* B;
 	SSSP* alg;
-	boost::container::vector<boost::container::vector<unsigned long>> results;
+	vector<vector<unsigned long>> results;
 
 	template <class Algorithm, class... Algorithms>
 	void run_single();
@@ -26,7 +29,7 @@ public:
 	template <class Algorithm, class... Algorithms>
 	void run(unsigned long num);
 
-	boost::container::vector<float> average();
+	vector<float> average();
 };
 
 TimeSSSP::TimeSSSP(Builder* _B){
@@ -41,11 +44,11 @@ void TimeSSSP::run_single(){
 	//GraphADT* G = c->convert<AdjacencyList>();
 	alg->setup(G, 0ul);
 	alg->run<Algorithm, Algorithms...>(true);
-	boost::container::vector<unsigned long> single_result = alg->get_timing_results();
+	vector<unsigned long> single_result = alg->get_timing_results();
 
 	results.push_back(single_result);
 
-	BOOST_ASSERT(single_result.size() == sizeof...(Algorithms) + 1);
+	// BOOST_ASSERT(single_result.size() == sizeof...(Algorithms) + 1);
 }
 
 template <class Algorithm, class... Algorithms>
@@ -53,11 +56,11 @@ void TimeSSSP::run(unsigned long cases){
 	for (unsigned counter = 0ul; counter != cases; counter++){
 		run_single<Algorithm, Algorithms...>();
 	}
-	boost::container::vector<float> avg = average();
+	vector<float> avg = average();
 }
 
-boost::container::vector<float> TimeSSSP::average(){
-	boost::container::vector<float> out = {};
+vector<float> TimeSSSP::average(){
+	vector<float> out = {};
 	unsigned long size = results[0].size();	// Number of algorithms
 	// Set up
 	for (unsigned long i = 0ul; i != size; i++){	// Iterate over number of algorithms

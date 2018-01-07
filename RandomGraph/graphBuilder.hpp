@@ -5,9 +5,6 @@
 #include "../DataStructures/adjacency_matrix.hpp"
 #include "random_graph_generator.hpp"
 
-#include <boost/tuple/tuple.hpp>
-
-
 class Builder{
 protected:
 	bool acyclic;

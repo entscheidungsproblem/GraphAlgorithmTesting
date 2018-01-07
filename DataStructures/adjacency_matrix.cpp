@@ -3,7 +3,6 @@
 
 #include "adjacency_matrix.hpp"
 
-#include <boost/assert.hpp>
 
 AdjacencyMatrix::AdjacencyMatrix(){
 	edges = {};
@@ -15,11 +14,11 @@ AdjacencyMatrix::AdjacencyMatrix(){
 void AdjacencyMatrix::add_vertex(){
 	// Add all of the new possible edges
 	for (unsigned long i = 0; i < (2*number_of_vertices) + 1; i++){
-		edges.push_back(boost::optional<float>{});
+		edges.push_back(optional<float>{});
 	}
 	number_of_vertices++;
 
-	BOOST_ASSERT(edges.size()==number_of_vertices*number_of_vertices);
+	//BOOST_ASSERT(edges.size()==number_of_vertices*number_of_vertices);
 }
 
 bool AdjacencyMatrix::check_edge(unsigned long position){
@@ -37,7 +36,7 @@ void AdjacencyMatrix::set_edge(unsigned long position, const float weight){
 }
 
 float AdjacencyMatrix::get_edge(unsigned long position){
-	return edges[position].get();
+	return edges[position].value();
 }
 
 unsigned long AdjacencyMatrix::get_edge_size(){
@@ -52,7 +51,7 @@ void AdjacencyMatrix::print_graph(){
 	unsigned long i = 0;
 	for (unsigned long j = 0; j < edges.size(); j++){
 		if (check_edge(j)){
-			printf("%.2f ", edges[j].get());
+			printf("%.2f ", edges[j].value());
 		}
 		else{
 			printf("_.__ ");
@@ -65,9 +64,9 @@ void AdjacencyMatrix::print_graph(){
 	}
 }
 
-void AdjacencyMatrix::export_dot(std::string filename, boost::container::set<unsigned long> shortest_path_tree){
+void AdjacencyMatrix::export_dot(string filename, set<unsigned long> shortest_path_tree){
 	// Create file
-	//std::string filename("graph");
+	//string filename("graph");
 	filename+=".dot";
 	FILE *myfile = fopen (filename.c_str() , "w");
 	// Create header for graph or digraph
@@ -85,7 +84,7 @@ void AdjacencyMatrix::export_dot(std::string filename, boost::container::set<uns
 				else{
 					fprintf(myfile, "-");
 				}
-				fprintf(myfile, "x%lu [label=%.2f,weight=%f",x,(edges[x+number_of_vertices*y]).get(),(edges[x+number_of_vertices*y]).get());
+				fprintf(myfile, "x%lu [label=%.2f,weight=%f",x,(edges[x+number_of_vertices*y]).value(),(edges[x+number_of_vertices*y]).value());
 				if (shortest_path_tree.find(x+number_of_vertices*y)!=shortest_path_tree.end()){
 					fprintf(myfile, ",color=red");
 				}

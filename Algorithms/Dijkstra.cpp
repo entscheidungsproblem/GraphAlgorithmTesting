@@ -1,13 +1,14 @@
 #include "Dijkstra.hpp"
 
-#include <boost/heap/priority_queue.hpp>
-#include <boost/heap/policies.hpp>
+#include <queue>
 
 #include <set>
 #include <queue>
 #include <vector>
 
-boost::container::vector<std::pair<float, boost::optional<unsigned long>>>
+using std::priority_queue;
+
+vector<std::pair<float, optional<unsigned long>>>
 	Dijkstra::shortest_path(GraphADT* G, unsigned long start){
 
 	// Custom comparions for priority queue
@@ -15,17 +16,17 @@ boost::container::vector<std::pair<float, boost::optional<unsigned long>>>
 		std::pair<unsigned long, float>&p2){return p1.second>p2.second;}};
 	
 	// Set up queue and visited vector
-	std::priority_queue<std::pair<unsigned long, float>,
-		std::vector<std::pair<unsigned long, float>>, compare> Q;
-	boost::container::vector<bool> visited;
+	priority_queue<std::pair<unsigned long, float>,
+		vector<std::pair<unsigned long, float>>, compare> Q;
+	vector<bool> visited;
 	
 	unsigned long size = G->get_vertex_size();
 	float infin = std::numeric_limits<float>::infinity();
 
 	//Set up output
-	boost::container::vector<std::pair<float, boost::optional<unsigned long>>> output;
+	vector<std::pair<float, optional<unsigned long>>> output;
 	for (unsigned i = 0ul; i != size; i++){
-		std::pair<float, boost::optional<unsigned long>> p (infin,boost::optional<unsigned long>{});
+		std::pair<float, optional<unsigned long>> p (infin,optional<unsigned long>{});
 		output.push_back(p);
 		visited.push_back(false);
 	}
