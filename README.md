@@ -1,3 +1,5 @@
+This project focused on the single source shortest path problem (SSSP) and compares multiple algorithms against each other. The algorithms of interest can solve the general case where graphs can have negative edges. A random graph generator was constructed to create large batches of graphs which were used to compare the algorithms average runtimes. This project was written in C++ and makes heavy use of templates to achieve generics for the algorithms and data structures.
+
 Guide:
 The program can be broken down into 4 main components:
 1. Data Structures: There are currently 2 graph implementations, adjacency matrix and adjacency lists, that share a parent GraphADT. Graphs can be created manually by adding vertices and setting edges but there is no support for removing vertices and edges can only be removed by setting edges to infinity.
